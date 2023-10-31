@@ -3,6 +3,9 @@ import static io.restassured.RestAssured.request;
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.*;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 import org.junit.Test;
 
 import io.restassured.http.Method;
@@ -93,7 +96,10 @@ public class UserJsonTest {
 		 	.statusCode(200)
 		 	.body("", hasSize(3))
 		 	//.body("name", hasItems("João da Silva", "Maria Joaquina", "Ana Júlia"))
-		 	.body("name", hasItems("João da Sia", "Maria Joaquina", "Ana Júlia"))
+		 	.body("name", hasItems("João da Silva", "Maria Joaquina", "Ana Júlia"))
+		 	.body("age[1]",is (25))
+		 	.body("filhos.name", hasItem(Arrays.asList("Zezinho", "Luizinho")))
+		 	.body("salary", contains(1234.5678f, 2500 , null))
 		 	;
 	}
 
