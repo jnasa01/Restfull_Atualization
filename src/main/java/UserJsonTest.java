@@ -92,7 +92,8 @@ public class UserJsonTest {
 		.then()
 		 	.statusCode(200)
 		 	.body("", hasSize(3))
-		 	.body("name", hasItems("João da Silva", "Maria Joaquina", "Ana Júlia"))
+		 	//.body("name", hasItems("João da Silva", "Maria Joaquina", "Ana Júlia"))
+		 	.body("name", hasItems("João da Sia", "Maria Joaquina", "Ana Júlia"))
 		 	;
 	}
 
