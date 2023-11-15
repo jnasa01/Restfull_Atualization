@@ -6,6 +6,8 @@ import static org.junit.Assert.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import org.hamcrest.Matchers;
+import org.hamcrest.core.AllOf;
 import org.junit.Test;
 
 import io.restassured.http.Method;
@@ -115,8 +117,16 @@ public class UserJsonTest {
 		 	.body("age.findAll{it <= 25 && it > 20}.size()", is(1))
 		 	.body("findAll{it.age <= 25 && it.age > 20}.name", hasItem("Maria Joaquina"))
 		 	.body("findAll{it.age <= 25}.name", hasItems("Maria Joaquina", "Ana Júlia"))
-		 	.body("findAll{it.age <= 25}[1].name", is("Ana Júlia"))
-		 	.body("findAll{it.age <= 25}[-2].name", is("Ana Júlia"))
+		 	.body("findAll{it.age <= 25}[0].name", is("Maria Joaquina"))
+		 	.body("findAll{it.age <= 25}[-1].name", is("Ana Júlia"))
+		 	.body("find{it.age <= 25}.name", is("Maria Joaquina"))
+		 	.body("findAll{it.name.contains('n')}.name", hasItems("Maria Joaquina", "Ana Júlia"))
+		 	.body("findAll{it.name.length() > 10}.name", hasItems("João da Silva", "Maria Joaquina"))
+		 	.body("name.collect{it.toUpperCase()}", hasItem("MARIA JOAQUINA"))
+		 	.body("name.findAll{it.startsWith('Maria')}.collect{it.toUpperCase()}", hasItem("MARIA JOAQUINA"))
+		 	.body("name.findAll{it.startsWith('Maria')}.collect{it.toUpperCase().toArray()", allOf(arrayContaining("Maria Joaquina"), arrayWithSize(1)))
+		 			// allOf(arrayContaining("MARIA JOAQUINA"), arrayWithSize(1)))
+		 	
 		 	;
 	;
 	}
